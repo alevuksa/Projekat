@@ -1,3 +1,4 @@
+
 import speech_recognition as sr
 import os
 
@@ -60,3 +61,20 @@ def voice_command_recognition():
 # initial call to the voice command recognition function
 while voice_command_recognition():
     pass  # continue looping until perform_action() returns False
+
+import cProfile
+
+
+cProfile.run('voice_command_recognition()', 'output.dat')
+
+import pstats
+from pstats import SortKey
+
+with open("output_time.txt","w") as f:
+    p = pstats.Stats("output.dat", stream=f)
+    p.sort_stats("time").print_stats()
+
+with open("output_calls.txt", "w")as f:
+   p = pstats.Stats("output.dat", stream=f)
+p.sort_stats("calls").print_stats()
+
